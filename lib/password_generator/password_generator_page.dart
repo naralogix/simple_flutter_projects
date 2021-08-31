@@ -7,7 +7,7 @@ import 'password_length_slider.dart';
 class PasswordGeneratorPage extends StatefulWidget {
   const PasswordGeneratorPage({Key? key}) : super(key: key);
 
-  static String title = 'Password Generator';
+  static const String title = 'Password Generator';
 
   @override
   _PasswordGeneratorPageState createState() => _PasswordGeneratorPageState();

@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     ),
     ProjectPage(
       title: HangmanPage.title,
-      page: const HangmanPage(),
+      page: HangmanPage(),
     ),
   ];
 

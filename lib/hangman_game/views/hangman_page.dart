@@ -12,26 +12,23 @@ import 'package:simple_flutter_projects/hangman_game/views/mystery_word_display/
 final currentMysteryWord = ScopedProvider<String>(null);
 
 class HangmanPage extends StatelessWidget {
-  const HangmanPage({Key? key}) : super(key: key);
+  HangmanPage({Key? key}) : super(key: key);
 
-  static String title = 'Hangman Game';
-
-  String _getSuccessMessage() {
-    const List<String> successMessages = [
-      'Nice!',
-      'Keep going!',
-      "You're good on this!",
-      'Very good!',
-      "You're on the roll!",
-    ];
-    final random = Random().nextInt(successMessages.length);
-    return successMessages[random];
-  }
+  static const String title = 'Hangman Game';
+  static const List<String> _successMessages = [
+    'Nice!',
+    'Keep going!',
+    "You're good on this!",
+    'Very good!',
+    "You're on the roll!",
+  ];
+  final _random = Random();
 
   void _getNextWord(BuildContext context, HangmanPageState hangmanPageState) {
     if (hangmanPageState is HangmanPageStateGameOn &&
         hangmanPageState.mysteryWordCompleted) {
-      final message = _getSuccessMessage();
+      final message =
+          _successMessages[_random.nextInt(_successMessages.length)];
       final snackBar = SnackBar(
         backgroundColor: Colors.green,
         content: Text(message),
@@ -63,44 +60,28 @@ class HangmanPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   AnimatedSwitcher(
-                      duration: const Duration(seconds: 1),
-                      child: mysteryWordCompleted
-                          ? Container()
-                          : Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const SizedBox(height: 48.0),
-                                Text('Round $round',
-                                    style:
-                                        Theme.of(context).textTheme.headline5),
-                                const SizedBox(height: 48.0),
-                                Lives(lives),
-                                const SizedBox(height: 96.0),
-                                ProviderScope(
-                                  overrides: [
-                                    currentMysteryWord
-                                        .overrideWithValue(mysteryWord)
-                                  ],
-                                  child: const MysteryWordDisplay(),
-                                ),
-                              ],
-                            )),
-                  // Lives(lives),
-                  // const SizedBox(height: 48.0),
-                  // ProviderScope(
-                  //           overrides: [
-                  //             currentMysteryWord.overrideWithValue(mysteryWord)
-                  //           ],
-                  //           child: const MysteryWordDisplay(),
-                  //         ),
-
-                  // ProviderScope(
-                  //   overrides: [
-                  //     currentMysteryWord.overrideWithValue(mysteryWord)
-                  //   ],
-                  //   child: const MysteryWordDisplay(),
-                  // ),
-                  const SizedBox(height: 48.0),
+                    duration: const Duration(seconds: 1),
+                    child: mysteryWordCompleted
+                        ? Container()
+                        : Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const SizedBox(height: 48.0),
+                              Text('Round $round',
+                                  style: Theme.of(context).textTheme.headline5),
+                              const SizedBox(height: 48.0),
+                              Lives(lives),
+                              const SizedBox(height: 96.0),
+                              ProviderScope(
+                                overrides: [
+                                  currentMysteryWord
+                                      .overrideWithValue(mysteryWord)
+                                ],
+                                child: const MysteryWordDisplay(),
+                              ),
+                            ],
+                          ),
+                  ),
                   const Keyboard(),
                 ],
               );
